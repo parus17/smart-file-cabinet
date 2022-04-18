@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {MenuItem} from "primeng/api";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
-  message: any;
+export class AppComponent implements OnInit {
+  items: MenuItem[] = [];
 
-  constructor(private http: HttpClient) {
-    this.http.get('/api/message')
-      .subscribe((resp: any) => {
-        return this.message = resp.message;
-      });
+  ngOnInit(): void {
+    this.items = [
+      {label: 'Boeken', routerLink: 'boeken'},
+      {label: 'Strips', routerLink: 'strips'},
+      {label: 'Recepten', routerLink: 'recepten'}
+    ];
   }
 }
