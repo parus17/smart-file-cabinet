@@ -12,6 +12,8 @@
   "dependencies": {},
   "devDependencies": {
     "@azure/functions": "^3.0.0",
+    "@azure/cosmos": "latest",
+    "@azure/app-configuration": "latest",
     "typescript": "^4.0.0"
   }
 }
