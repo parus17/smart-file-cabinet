@@ -1,16 +1,75 @@
-<p-table [columns]="cols" [value]="boeken">
+<p-toolbar styleClass="mb-4">
+  <ng-template pTemplate="left">
+    <p-button label="Nieuw" icon="pi pi-plus" styleClass="p-button-success mr-2" (click)="openNew()"></p-button>
+    <!--        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>-->
+    <p-button icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteSelectedBoeken()" [disabled]="!selectedBoeken || !selectedBoeken.length"></p-button>
+    <!--    <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>-->
+  </ng-template>
+</p-toolbar>
+
+<p-table #dt [value]="boeken" [(selection)]="selectedBoeken">
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let col of columns">
-        {{col.header}}
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
+      <th>Auteur</th>
+      <th>Titel</th>
+      <th>ISBN</th>
+      <th>Status</th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-boek let-columns="columns">
     <tr>
-      <td *ngFor="let col of columns">
-        {{boek[col.field]}}
+      <td>
+        <p-tableCheckbox [value]="boek"></p-tableCheckbox>
+      </td>
+      <td>{{boek.auteur}}</td>
+      <td>{{boek.titel}}</td>
+      <td>{{boek.isbn}}</td>
+      <td>{{boek.status}}</td>
+      <td>
+        <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                (click)="editBoek(boek)"></button>
+        <button pButton icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="deleteBoek(boek)"></button>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+<p-dialog [(visible)]="boekDialog" [style]="{width: '450px'}" header="Boek Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="isbn">ISBN</label>
+      <div class="p-inputgroup">
+        <!--        <button type="button" pButton  label="Search"></button>-->
+        <!--        <p-button label="Zoek"></p-button>-->
+        <input type="text" pInputText id="isbn" [(ngModel)]="boek.isbn" required/>
+        <button type="button" pButton label="Zoek"></button>
+        <!--        <p-button label="Zoek"></p-button>-->
+      </div>
+      <small class="p-error" *ngIf="submitted && !boek.isbn">ISBN is verplicht.</small>
+    </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <p-dropdown id="status" [options]="statussen" [(ngModel)]="boek.status" optionLabel="name"></p-dropdown>
+    </div>
+    <div class="field">
+      <label for="auteur">Auteur</label>
+      <input type="text" pInputText id="auteur" [(ngModel)]="boek.auteur" required/>
+      <small class="p-error" *ngIf="submitted && !boek.auteur">Auteur is verplicht.</small>
+    </div>
+    <div class="field">
+      <label for="titel">Titel</label>
+      <textarea id="titel" pInputTextarea [(ngModel)]="boek.titel" required rows="3" cols="20"></textarea>
+      <small class="p-error" *ngIf="submitted && !boek.titel">Titel is verplicht.</small>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Annuleer" icon="pi pi-times" styleClass="p-button-text" (click)="hideDialog()"></p-button>
+    <p-button label="Bewaar" icon="pi pi-check" styleClass="p-button-text" (click)="saveBoek()"></p-button>
+  </ng-template>
+</p-dialog>
