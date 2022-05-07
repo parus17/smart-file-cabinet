@@ -54,7 +54,7 @@
     </div>
     <div class="field">
       <label for="status">Status</label>
-      <p-dropdown id="status" [options]="statussen" [(ngModel)]="boek.status" optionLabel="name"></p-dropdown>
+      <p-dropdown id="status" [options]="statussen" [(ngModel)]="boek.status" optionLabel="name" optionValue="code"></p-dropdown>
     </div>
     <div class="field">
       <label for="auteur">Auteur</label>
@@ -73,3 +73,7 @@
     <p-button label="Bewaar" icon="pi pi-check" styleClass="p-button-text" (click)="saveBoek()"></p-button>
   </ng-template>
 </p-dialog>
+
+<p-confirmDialog acceptLabel="Ja" rejectLabel="Nee" [style]="{width: '450px'}"></p-confirmDialog>
+
+<p-toast></p-toast>
