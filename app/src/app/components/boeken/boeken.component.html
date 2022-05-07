@@ -1,18 +1,31 @@
 <p-toolbar styleClass="mb-4">
   <ng-template pTemplate="left">
     <p-button label="Nieuw" icon="pi pi-plus" styleClass="p-button-success mr-2" (click)="openNew()"></p-button>
-    <button pButton icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedBoeken()" [disabled]="!selectedBoeken || !selectedBoeken.length"></button>
+    <button pButton icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedBoeken()"
+            [disabled]="!selectedBoeken || !selectedBoeken.length"></button>
   </ng-template>
 </p-toolbar>
 
-<p-table #dt [value]="boeken" [(selection)]="selectedBoeken">
+<p-table #dt [value]="boeken"
+         [(selection)]="selectedBoeken"
+         [globalFilterFields]="['auteur', 'titel']"
+         [rows]="5" [paginator]="true">
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <span class="p-input-icon-left ml-auto">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')"
+               placeholder="Filter ..."/>
+      </span>
+    </div>
+  </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th style="width: 3rem">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th>Auteur</th>
-      <th>Titel</th>
+      <th pSortableColumn="auteur">Auteur <p-sortIcon field="auteur"></p-sortIcon></th>
+      <th pSortableColumn="titel">Titel <p-sortIcon field="titel"></p-sortIcon></th>
       <th>ISBN</th>
       <th>Status</th>
       <th></th>
@@ -35,6 +48,11 @@
       </td>
     </tr>
   </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+      Totaal aantal boeken: {{boeken ? boeken.length : 0 }}
+    </div>
+  </ng-template>
 </p-table>
 
 <p-dialog [(visible)]="boekDialog" [style]="{width: '450px'}" header="Boek Details" [modal]="true" styleClass="p-fluid">
@@ -49,7 +67,8 @@
     </div>
     <div class="field">
       <label for="status">Status</label>
-      <p-dropdown id="status" [options]="statussen" [(ngModel)]="boek.status" optionLabel="name" optionValue="code"></p-dropdown>
+      <p-dropdown id="status" [options]="statussen" [(ngModel)]="boek.status" optionLabel="name"
+                  optionValue="code"></p-dropdown>
     </div>
     <div class="field">
       <label for="auteur">Auteur</label>

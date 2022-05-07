@@ -82,7 +82,12 @@ export class BoekenComponent implements OnInit {
           .subscribe(() => {
             this.boeken = this.boeken.filter(val => val.id !== boek.id);
             this.boek = {};
-            this.messageService.add({severity: 'success', summary: 'Bevestiging', detail: 'Boek verwijderd', life: 3000});
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Bevestiging',
+              detail: 'Boek verwijderd',
+              life: 3000
+            });
           });
       }
     });
@@ -108,7 +113,6 @@ export class BoekenComponent implements OnInit {
 
   findIndexById(id?: string): number {
     return this.boeken.findIndex(value => value.id == id);
-    ;
   }
 
   searchISBN() {
@@ -118,5 +122,9 @@ export class BoekenComponent implements OnInit {
         this.boek.auteur = boek.auteur;
         this.boek.titel = boek.titel;
       });
+  }
+
+  getEventValue($event: any): string {
+    return $event.target.value;
   }
 }
