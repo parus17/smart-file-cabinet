@@ -15,7 +15,7 @@ module.exports = async function (context, req) {
 
     const deleteResponse = await container.item(id).delete();
 
-    context.res = {
-        body: deleteResponse
-    };
+    // context.res = {
+    //     body: deleteResponse
+    // };
 }

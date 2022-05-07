@@ -1,9 +1,7 @@
 <p-toolbar styleClass="mb-4">
   <ng-template pTemplate="left">
     <p-button label="Nieuw" icon="pi pi-plus" styleClass="p-button-success mr-2" (click)="openNew()"></p-button>
-    <!--        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>-->
-    <p-button icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteSelectedBoeken()" [disabled]="!selectedBoeken || !selectedBoeken.length"></p-button>
-    <!--    <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>-->
+    <button pButton icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedBoeken()" [disabled]="!selectedBoeken || !selectedBoeken.length"></button>
   </ng-template>
 </p-toolbar>
 
@@ -44,11 +42,8 @@
     <div class="field">
       <label for="isbn">ISBN</label>
       <div class="p-inputgroup">
-        <!--        <button type="button" pButton  label="Search"></button>-->
-        <!--        <p-button label="Zoek"></p-button>-->
         <input type="text" pInputText id="isbn" [(ngModel)]="boek.isbn" required/>
-        <button type="button" pButton label="Zoek"></button>
-        <!--        <p-button label="Zoek"></p-button>-->
+        <button type="button" pButton label="Zoek" (click)="searchISBN()"></button>
       </div>
       <small class="p-error" *ngIf="submitted && !boek.isbn">ISBN is verplicht.</small>
     </div>
@@ -58,13 +53,11 @@
     </div>
     <div class="field">
       <label for="auteur">Auteur</label>
-      <input type="text" pInputText id="auteur" [(ngModel)]="boek.auteur" required/>
-      <small class="p-error" *ngIf="submitted && !boek.auteur">Auteur is verplicht.</small>
+      <input type="text" pInputText id="auteur" [(ngModel)]="boek.auteur"/>
     </div>
     <div class="field">
       <label for="titel">Titel</label>
-      <textarea id="titel" pInputTextarea [(ngModel)]="boek.titel" required rows="3" cols="20"></textarea>
-      <small class="p-error" *ngIf="submitted && !boek.titel">Titel is verplicht.</small>
+      <textarea id="titel" pInputTextarea [(ngModel)]="boek.titel" rows="3" cols="20"></textarea>
     </div>
   </ng-template>
 
